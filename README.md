@@ -2,7 +2,7 @@
 ## Table of Contents
 [Overview](#overview)<br/>
 [Introduction](#intro)<br/>
-[What is Music Information Retrieval & Audio Signal Processing?](#mir-asp)<br/>
+[What is Audio Signal Processing?](#asp)<br/>
 [Data Preparation](#data-prep)<br/>
 [Exploratory Data Analysis](#EDA)<br/>
 [Deep Learning Models](#deep)<br/>
@@ -12,20 +12,17 @@
 
 ## <a name="overview">Overview</a>
 
-## <a name="intro">Introduction</a>
+Music is everywhere. You can find yourself hearing all kinds of music as you go throughout your day - maybe some soft indie-rock at your local coffee shop, the latest pop songs over the radio, some electronic dance music in your fitness class. The options are endless. And even so, music continues to grow, adapt, and expand. New genres and subgenres continue to pop up and offer new music.
 
-In this day and age, streaming is king when it comes to entertainment platforms. Media content consumption is at an all time high and shows no signs of stopping. Given this high demand, the entertainment landscape has become a fierce battlegrounds where companies are constantly competing for market share with new product offerings and broad content selection.
+In this ever-expanding space, it's important to be able to classify songs to be able to group and categorize them in meaningful ways. As such, this project aims to tackle the popular problem of genre classification.
 
-*So how do companies differentiate themselves and stand out?*
+In a previous project found [here](https://github.com/kenshr/Music-Genre-Classification-with-Audio-Features) I addressed the same issue using audio features of songs, which were gathered from Spotify's web API, in order to determine their genres. While this project proved to be largely successful, I wanted to build on the same idea and make my models more adaptable.
 
-One answer is to offer exclusive content that attracts users from other platforms. However, this approach is expensive and unsustainable as a sole means of bolstering continued user engagement (i.e. companies won't always be able to win exclusive streaming rights to hot new content).
+Rather than using audio features that need to be generated via a third party, this project will use deep learning models perform genre classification on songs using raw audio.
 
-Another solution is offering users top-tier recommendations. And the value of recommender systems cannot be overstated - an article from Harvard Business Review went as far as to say that recommender systems are the "single most important algorithmic distinction between 'born digital' enterprises and legacy companies."<sup>[1](https://hbr.org/2017/08/great-digital-companies-build-great-recommendation-engines)</sup>
+## <a name="asp">What is Audio Signal Processing?</a>
 
-
-
-
-## <a name="mir-asp">What is Music Information Retrieval & Audio Signal Processing?</a>
+This section will serve as a primer to introduce some technical concepts specific to audio signal processing that were employed in this project. If you are only interested in the strictly data science aspects of this project, please feel free to skip to the next section.
 
 
 
