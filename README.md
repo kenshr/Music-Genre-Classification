@@ -18,29 +18,31 @@ In this ever-expanding space, it's important to be able to classify songs to be 
 
 In a [previous project](https://github.com/kenshr/Music-Genre-Classification-with-Audio-Features) I addressed the same issue using audio features of songs, which were gathered from Spotify's web API, in order to determine their genres. While this project proved to be largely successful, I wanted to build on the same idea and make my models more adaptable. Rather than using audio features that need to be generated via a third party, this project will use deep learning models to perform genre classification on songs using raw audio.
 
-The dataset<sup>[1](https://github.com/mdeff/fma)</sup> I will be using for this project has 30 second clips of 8000 songs, equally balanced across 8 genres:
--
-
-
-
+The dataset<sup>[1](https://github.com/mdeff/fma)</sup> used for this project has 30 second clips of 8000 songs, equally balanced across 8 genres:
+- Electronic
+- Experimental
+- Folk
+- Hip-Hop
+- Instrumental
+- International
+- Pop
+- Rock
 
 ## <a name="asp">What is Audio Signal Processing?</a>
 
-This section will serve as a primer to introduce some technical concepts specific to audio signal processing that were employed in this project. If you are mainly interested in the strictly data science aspects of this project, please feel free to skip to the [next section](#data-prep).
+This section will serve as a primer to introduce and demystify some audio signal processing concepts that were employed in this project. If you are only interested in strictly data science, please feel free to skip to the [next section](#data-prep).
 
-One of the first issues to address is how to properly feed the audio as input into our models. Audio, in essence, is the product of variations in air pressure over time. These changes are recorded at a specified sample rate traditionally 44,100 samples per second (44.1 kHz), and give us waveforms. As seen below, these waveforms are rich with information and can vary in shape depending on sample rate.
+Audio, in essence, is the product of variations in air pressure over time. These changes are recorded at a specified sample rate, traditionally 44,100 samples per second (44.1 kHz), which gives us waveforms. As seen below, these waveforms offer large amounts of information within the span of even 1 second.
 
-![<img src='imgs/waveform_visualization.gif'>](https://deepmind.com/blog/article/wavenet-generative-model-raw-audio)
+[<img src='imgs/waveform_visualization.gif'>](https://deepmind.com/blog/<article/wavenet-generative-model-raw-audio)
 
-These waveforms are what you and I as everyday listeners hear when we listen to mp3 and wav files.
+These waveforms can be stored in mp3's, wav files, and other audio file formats. This brings us to our starting point, with our data being in a .mp3 file format. One of the first issues to address is how to convert our data into a palatable format that can be input into our deep learning models, as they cannot process raw audio data. In order to overcome this, we use mel spectrograms like the one shown below.
 
-a palatable data format that can be used as input into our deep learning models.
+![](imgs/sample_melspect.png)
 
-The first point to discuss is mel spectrograms. Spectrograms are visual representations of a spectrum of frequencies from a signal as it varies over time<sup>[1](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)</sup>. Put simply, a spectrogram is a picture depicting audio visually.
+Spectrograms are visual representations of a spectrum of frequencies from a signal as it varies over time.<sup>[3](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)</sup> Put simply, a spectrogram is a picture depicting audio visually. The "mel" component of the spectrogram refers to the mel scale. The mel scale is a method of scaling pitches to make equal distances in pitch sound equally distant to listeners.
 
-The "mel" component of the spectrogram refers to the mel scale,
-
-
+The idea behind using mel spectrograms for our deep learning models is that they are in a visual format which CAN be processed in a neural network and they are scaled in such a way that the data is represented in a format similar to how a human perceives the same sound.
 
 ## <a name="data-prep">Data Preparation</a>
 
@@ -65,5 +67,6 @@ The "mel" component of the spectrogram refers to the mel scale,
 ## <a name="references">References</a>
 
 1. [Dataset](https://github.com/mdeff/fma)
-2. [What is a Spectrogram?](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)
-2.
+2. [Waveform Visualization](https://deepmind.com/blog/<article/wavenet-generative-model-raw-audio)
+3. [What is a Spectrogram?](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)
+4.
