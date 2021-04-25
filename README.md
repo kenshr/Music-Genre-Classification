@@ -35,8 +35,9 @@ This section will serve as a primer to introduce and demystify some audio signal
 Audio, in essence, is the product of variations in air pressure over time. These changes are recorded at a specified sample rate, traditionally 44,100 samples per second (44.1 kHz), which gives us waveforms. As seen below, these waveforms offer large amounts of information within the span of even 1 second.
 
 <p align="center">
-[<img src='imgs/waveform_visualization.gif'>](https://deepmind.com/blog/article/wavenet-generative-model-raw-audio)
+<img src='imgs/waveform_visualization.gif'>
 </p>
+<center></center>
 
 These waveforms can be stored in mp3's, wav files, and other audio file formats. This brings us to our starting point, with our data being in a .mp3 file format. One of the first issues to address is how to convert our data into a palatable format that can be input into our deep learning models, as they cannot process raw audio data. In order to overcome this, we use mel spectrograms like the one shown below.
 
@@ -44,9 +45,11 @@ These waveforms can be stored in mp3's, wav files, and other audio file formats.
 <img src="imgs/sample_melspect.png">
 </p>
 
-Spectrograms are visual representations of a spectrum of frequencies from a signal as it varies over time.<sup>[3](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)</sup> Put simply, a spectrogram is a picture depicting audio visually. The "mel" component of the spectrogram refers to the mel scale. The mel scale is a method of scaling pitches to make equal distances in pitch sound equally distant to listeners.
+Spectrograms are visual representations of a spectrum of frequencies from a signal as it varies over time.<sup>[3](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)</sup> Put simply, a spectrogram is a picture depicting audio visually. The raw audio is converted into a spectrogram using a mathematical technique called the Fourier Transform. The Fourier transform takes an audio snippet and breaks the sound down into constituent sine and cosine waves of corresponding amplitude. Doing so will convert our audio into the "spectrum of frequencies" mentioned above in the definition. The package we're using applies a Fast Fourier Tranform (FFT) algorithm multiple times across our passed-in audio to generate the spectrogram.
 
-The idea behind using mel spectrograms for our deep learning models is that they are in a visual format which CAN be processed in a neural network and they are scaled in such a way that the data is represented in a format similar to how a human perceives the same sound.
+The "mel" component of the mel spectrogram refers to the mel scale. The mel scale is a method of scaling pitches to make equal distances in pitch sound equally distant to listeners. This is necessary because human hearing is innately better at hearing differences in low frequencies than differences in high frequencies. Therefore, after generating the spectrogram, the frequency axis is scaled accordingly. This can be seen in the graph above as the y-axis follows an exponential trend as it increases.
+
+Coming back to the big picture, the main idea behind using mel spectrograms for our deep learning models is that they are in a visual format which CAN be processed in a neural network and they are scaled in such a way that the data is represented in a format similar to how a human perceives the sound.
 
 ## <a name="data-prep">Data Preparation</a>
 
