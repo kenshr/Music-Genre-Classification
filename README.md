@@ -8,7 +8,7 @@ aaaaaaaaaa
 [Description](#description)<br/>
 [So what is Audio Signal Processing?](#asp)<br/>
 [Data Preparation](#data-prep)<br/>
-[Exploratory Data Analysis](#EDA)<br/>
+[EDA](#EDA)<br/>
 [Deep Learning Models](#deep)<br/>
 [Summary](#summary)<br/>
 [Future Ideas](#future)<br/>
@@ -81,9 +81,25 @@ Later on in the project, I decided to experiment with 1D convolutional neural ne
 |     Presence     |       4000-6000      | harmonic frequencies of midrange instruments like violin and piccolo   |
 |    Brilliance    |      6000-20000      | high-pitched sounds like whistles, cymbals, and high harmonics         |
 
-## <a name="EDA">Exploratory Data Analysis</a>
+<br/>
+Once the spectrograms were split into frequency range channels, I "flattened" each of the channels by averaging their frequencies for small incremental time splits to thus yield 7 channels of 1-dimensional frequency input that represent the song.
 
+## <a name="EDA">EDA</a>
+After preparing the data for modeling, I took some time to explore the metadata associated with the 8,000 songs from the dataset. The metadata consists of 51 features corresponding to anything from the engineer(s) who worked on the song to the song's wikipedia page (if any) to the song's licensing. It is quite sparse with just under a third of the features having information for less than 3,000 songs.
 
+I was interested in seeing how the songs were distributed based on when they were made. Using the "date_created" feature, I found that the earliest song in the dataset was made on 11/25/2008 while the last song was made on 3/24/2017. I then graphed the number of songs that came from each year per genre. 2017 was omitted from the visualization since it contained so few tracks.
+
+<p align="center">
+<img src="imgs/tracks_per_genre_per_year.png">
+</p>
+
+We can see that the 1000 songs per genre are fairly evenly distributed over the years from 2008 to 2016. The only major deviation is that almost half of the songs in the Instrumental category came from 2015. Hopefully, having such evenly distributed data over a 10 year period will make the model more robust and less susceptible to signal coming from changes in genre trends over time.
+
+<p align="center">
+<img src="imgs/avg_length_per_genre.png">
+</p>
+
+I also plotted the average song length per genre. There was a surprising amount of variation with longest genre, International, being over 50 seconds longer than the shortest genre, Hip-Hop. For our purposes, this should not have any effect on our modeling since we're using 30 second samples for each song.
 
 ## <a name="deep">Deep Learning Models</a>
 
