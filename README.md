@@ -44,7 +44,7 @@ Audio, in essence, is the product of variations in air pressure over time. These
 <img src='imgs/waveform_visualization.gif'>
 </p>
 
-These waveforms can be stored in mp3's, wav files, and other audio file formats. This brings us to our starting point, with our data being stored in an .mp3 file format. The first issue to address is how to convert our data into a palatable format that can be input into deep learning models, as they cannot process raw audio data. In order to overcome this, we use mel spectrograms like the one shown below.
+These waveforms can be stored in mp3's, wav files, and other audio file formats. This brings us to our starting point, with our data being stored in an .mp3 file format. The first issue to address is how to convert our data into a palatable format that can be input into deep learning models, as they cannot process raw audio data. In order to overcome this, I use mel spectrograms like the one shown below.
 
 <p align="center">
 <img src="imgs/sample_melspect.png">
@@ -117,20 +117,15 @@ The final model configuration utilized the same 1D convolutional neural network 
 After testing various neural network architectures and performing hyper-parameter tuning, the final model yielded a maximum accuracy of 49% on the test set at 40 epochs.
 
 <p align="center">
-<img src="imgs/model_accuracy.png">
-</p>
-
-<p align="center">
 <img src="imgs/model_loss.png">
 </p>
 
-<p float="left">
-  <img src="imgs/model_accuracy.png" width="250" />
-  <img src="imgs/model_loss.png" width="250" />
+<p align="center">
+<img src="imgs/model_accuracy.png">
 </p>
 
 ## <a name="summary">Summary</a>
-
+Through iteration and testing,
 
 
 ## <a name="future">Future Ideas</a>
