@@ -9,7 +9,7 @@ aaaaaaaaaa
 [So what is Audio Signal Processing?](#asp)<br/>
 [Data Preparation](#data-prep)<br/>
 [EDA](#EDA)<br/>
-[Deep Learning Models](#deep)<br/>
+[Modeling](#modeling)<br/>
 [Summary](#summary)<br/>
 [Future Ideas](#future)<br/>
 [References](#references)<br/>
@@ -101,17 +101,32 @@ We can see that the 1000 songs per genre are fairly evenly distributed over the 
 
 I also plotted the average song length per genre. There was a surprising amount of variation with the longest genre, International, being over 50 seconds longer than the shortest genre, Hip-Hop. For our purposes, this should not have any effect on our modeling since we're using 30 second samples for each song.
 
-## <a name="deep">Deep Learning Models</a>
+## <a name="modeling">Modeling</a>
 I began modeling by establishing a baseline using a dummy classifier which made predictions at random. I elected to use accuracy as my main metric for gauging performance since we want the models to predict all genres equally well and there are no differing rewards/penalties associated with any one genre. Given that we have 8 genres, it makes sense that the dummy classifier had an accuracy of 13% (roughly one in eight).
 
 I made my first model starting with a traditional 2D convolutional neural network (CNN) to process the mel spectrogram images. With this, I was able to achieve a max accuracy of 40% on the test set.
 
 After hitting a wall, I pivoted to the 1D convolutional neural network approach mentioned above in the data preparation section. This new configuration was able to push the needle forward to an accuracy of 43% on the test set. Another added benefit of this configuration was that training time on the neural network was cut down by 75% since it was processing much less data (1D vs 2D).
 
-The final model configuration utilized the same 1D convolutional neural network and added an LSTM layer to the architecture to better capture long-term temporal trends in the audio. This way, the initial CNN layers could capture different feature elements of the song which would then be fed into the LSTM to discern longer patterns such as rhythm and cadence. After testing various neural network architectures and performing hyper-parameter tuning, the final model yielded a maximum accuracy of 49% on the test set.
+The final model configuration utilized the same 1D convolutional neural network and added an LSTM layer to the architecture to better capture long-term temporal trends in the audio. This way, the initial CNN layers could capture different feature elements of the song which would then be fed into the LSTM to discern longer patterns such as rhythm and cadence.
 
 <p align="center">
 <img src="imgs/CNN_LSTM_modelsummary.png">
+</p>
+
+After testing various neural network architectures and performing hyper-parameter tuning, the final model yielded a maximum accuracy of 49% on the test set at 40 epochs.
+
+<p align="center">
+<img src="imgs/model_accuracy.png">
+</p>
+
+<p align="center">
+<img src="imgs/model_loss.png">
+</p>
+
+<p float="left">
+  <img src="imgs/model_accuracy.png" width="250" />
+  <img src="imgs/model_loss.png" width="250" />
 </p>
 
 ## <a name="summary">Summary</a>
