@@ -1,20 +1,15 @@
 # Music-Genre-Classification
 
-## Overview
-
-aaaaaaaaaa
-
 ## Table of Contents
-[Description](#description)<br/>
+[Overview](#overview)<br/>
 [So what is Audio Signal Processing?](#asp)<br/>
 [Data Preparation](#data-prep)<br/>
 [EDA](#EDA)<br/>
 [Modeling](#modeling)<br/>
 [Summary](#summary)<br/>
-[Future Ideas](#future)<br/>
 [References](#references)<br/>
 
-## <a name="description">Description</a>
+## <a name="overview">Overview</a>
 
 Music is everywhere. You can find yourself hearing all kinds of music as you go throughout your day - maybe some soft indie-rock at your local coffee shop, the latest pop songs over the radio, some electronic dance music in your fitness class. The options are endless. And even so, music continues to grow, adapt, and expand. New genres and subgenres continue to pop up and offer new music.
 
@@ -32,7 +27,7 @@ The dataset<sup>[**1**](https://github.com/mdeff/fma)</sup> used for this projec
 - Pop
 - Rock
 
-**ADD MENTION OF ASP**
+In order to use this data to train a deep learning model, we will need to convert the it into a format that the model can use. For this project, we will use audio signal processing tools and concepts to convert the audio into images (which will work for training models).
 
 ## <a name="asp">So what is Audio Signal Processing?</a>
 
@@ -125,12 +120,10 @@ After testing various neural network architectures and performing hyper-paramete
 </p>
 
 ## <a name="summary">Summary</a>
-Through iteration and testing,
 
+Overall, this project was a great success. We took 30 second clips of 8,000 songs spread evenly across 8 genres and used them to train deep learning models. Starting from a baseline of 12.5% accuracy, the trained CNN-LSTM model was able to improve performance by 36% with a maximum validation accuracy of 49%. During this process, I also learned a lot about (audio) signal processing, which is easily its own field of study altogether.
 
-## <a name="future">Future Ideas</a>
-
-
+I firmly believe that this model, in its current architecture, can perform much better given more training data. Especially for neural networks, 8,000 data points is not much to work with. Some next steps for this project would be using the larger, imbalanced datasets from FMA<sup>[**1**](https://github.com/mdeff/fma)</sup> and seeing how the model performs. I'd also like to toy around with partitioning the audio samples into smaller snippets to increase sample size, although that  may affect the model's ability to study long-term temporal effects in the audio.
 
 ## <a name="references">References</a>
 
