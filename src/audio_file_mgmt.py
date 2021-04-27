@@ -4,6 +4,8 @@ import os
 from tqdm import tqdm
 from pydub import AudioSegment
 import librosa
+import warnings
+warnings.filterwarnings('ignore')
 
 # This class is currently built to primarily support working with the fma_small dataset but
 # has the tools necessary to be refactored to handle all datasets. Will try to revisit this
@@ -56,10 +58,10 @@ class AudioManagement:
     genre_encoding = {'Electronic':0, 'Experimental':1, 'Folk':2, 'Hip-Hop':3,
                       'Instrumental':4, 'International':5, 'Pop':6, 'Rock':7}
 
-    for index, row in tqdm(df.iterrows()):
+    for index, row in df.iterrows():
       ct += 1
       try:
-        track_id = int(df.index[index])
+        track_id = int(index)
         genre = str(row[('track', 'genre_top')])
         spect = self.make_spectrogram(track_id)
         # Normalize for small shape differences from time discrepancies
