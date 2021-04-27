@@ -26,11 +26,12 @@ class AudioManagement:
 
     Parameters:
     -----------
-    track_id (int):
+    track_id (int): number representing a song's track id
 
     Returns:
     --------
-
+    Returns a matrix of values which represent the
+    spectrogram of the audio file that was passed in
     """
     # Format track id to match filename
     tid = '{:06d}'.format(track_id)
@@ -42,7 +43,30 @@ class AudioManagement:
     spect = librosa.power_to_db(spect, ref=np.max)
     return spect.T
 
-  def create_feature_label_data(self, split, destination='../data/'):
+
+  def create_feature_label_data(self, split):
+    """
+    Loads in metadata from the path specified
+    when the class instance was created, iterates
+    through all tracks for the specified split,
+    and returns spectrograms and their corresponding
+    genres as two separate arrays (feature, label).
+
+    NOTE: The function naturally splits the data
+    because the creator of the dataset pre-split
+    the data, meaning that there's a column denoting
+    which split each track belongs to.
+
+    Parameters:
+    -----------
+    split (str): A string indicating which split
+    (training, validation, or test) to generate
+    feature and label data for
+
+    Returns:
+    --------
+    Returns a feature array (X) and a label array (y)
+    """
     genres = []
     X = np.empty((0, 640, 128))
     ct = 0
@@ -81,8 +105,51 @@ class AudioManagement:
     X = X[shuffle]
     y = y[shuffle]
 
-    np.savez(destination + split + '_data', X, y)
-    print(f'{split} data stored at {destination}{split}_data')
+    return X, y
+
+  @staticmethod
+  def convert_to_1D(filepath):
+    """
+    Takes a specified filepath, loads in the data,
+    splits the spectrograms into logical frequency
+    bands, and flattens each band along its
+    frequency (y-axis) via averaging. This converts
+    a spectrogram image representing audio into 7
+    1-dimensional channels which represent the same
+    audio. The channels are then stacked into a matrix
+    and outputted as a feature array along with their
+    corresponding label array.
+
+    Parameters:
+    -----------
+    filepath (str): the absolute filepath or relative
+    filepath from this file to the desired data file
+
+    Returns:
+    --------
+    Returns a flattened feature array (X) and a
+    label array (y)
+    """
+    # Load in spectrograms and labels
+    try:
+      npzfile = np.load(filepath)
+    except:
+      return 'invalid file'
+    X = npzfile['arr_0']
+    y = npzfile['arr_1']
+    # Split spectrogram into frequency bands and flatten them
+    sub_bass = X[:, :, :2].mean(axis=2)
+    bass = X[:, :, 2:6].mean(axis=2)
+    lower_midrange = X[:, :, 6:12].mean(axis=2)
+    midrange = X[:, :, 12:48].mean(axis=2)
+    higher_midrange = X[:, :, 48:96].mean(axis=2)
+    presence = X[:, :, 96:112].mean(axis=2)
+    harmonics = X[:, :, 112:128].mean(axis=2)
+
+    X_flat = np.dstack((sub_bass, bass, lower_midrange, midrange,
+                        higher_midrange, presence, harmonics))
+
+    return X_flat, y
 
 
   def duplicate_filestructure(self):
@@ -151,7 +218,22 @@ class AudioManagement:
 
 
 if __name__=="__main__":
-    am = AudioManagement()
-    am.create_feature_label_data(split='train')
-    am.create_feature_label_data(split='validation')
-    am.create_feature_label_data(split='test')
+  # Create instance of class
+  am = AudioManagement()
+
+  # Initialize train, validation, test data
+  X_train, y_train = am.create_feature_label_data(split='training')
+  X_val, y_val = am.create_feature_label_data(split='validation')
+  X_test, y_test = am.create_feature_label_data(split='test')
+  # Save data
+  np.savez('../data/training_data', X_train, y_train)
+  np.savez('../data/validation_data', X_val, y_val)
+  np.savez('../data/test_data', X_test, y_test)
+  # Create 1D data
+  X_train_1D, y_train_1D = am.convert_to_1D('../data/training_data.npz')
+  X_val_1D, y_val_1D = am.convert_to_1D('../data/validation_data.npz')
+  X_test_1D, y_test_1D = am.convert_to_1D('../data/test_data.npz')
+  # Save 1D data
+  np.savez('../data/1D_training_data', X_train, y_train)
+  np.savez('../data/1D_validation_data', X_val, y_val)
+  np.savez('../data/1D_test_data', X_test, y_test)
