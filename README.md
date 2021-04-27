@@ -128,7 +128,7 @@ I firmly believe that this model, in its current architecture, can perform much 
 ## <a name="references">References</a>
 
 1. [Dataset](https://github.com/mdeff/fma)
-2. [Waveform Visualization](https://deepmind.com/blog/<article/wavenet-generative-model-raw-audio)
+2. [Waveform Visualization](https://deepmind.com/blog/article/wavenet-generative-model-raw-audio)
 3. [Spectrogram Definition](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)
 4. [Fast Fourier Transform Visualization](https://www.mathworks.com/help/dsp/ref/dsp.stft.html)
 5. [Mel Scale Formula](https://en.wikipedia.org/wiki/Mel_scale)
