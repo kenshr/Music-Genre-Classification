@@ -27,7 +27,7 @@ The dataset<sup>[**1**](https://github.com/mdeff/fma)</sup> used for this projec
 - Pop
 - Rock
 
-In order to use this data to train a deep learning model, we will need to convert the it into a format that the model can use. For this project, we will use audio signal processing tools and concepts to convert the audio into images (which will work for training models).
+In order to use this data to train a deep learning model, we will need to convert it into a format that the model can use. For this project, we will use audio signal processing tools and concepts to convert the audio into images (which can be used to train models).
 
 ## <a name="asp">So what is Audio Signal Processing?</a>
 
@@ -39,19 +39,19 @@ Audio, in essence, is the product of variations in air pressure over time. These
 <img src='imgs/waveform_visualization.gif'>
 </p>
 
-These waveforms can be stored in mp3's, wav files, and other audio file formats. This brings us to our starting point, with our data being stored in an .mp3 file format. The first issue to address is how to convert our data into a palatable format that can be input into deep learning models, as they cannot process raw audio data. In order to overcome this, I use mel spectrograms like the one shown below.
+These waveforms can be stored in mp3's, wav files, and other audio file formats. This brings us to our starting point, with our data being stored in a .mp3 file format. The first issue to address is how to convert our data into a palatable format that can be input into deep learning models, as they cannot process raw audio data. In order to overcome this, I use mel spectrograms like the one shown below.
 
 <p align="center">
 <img src="imgs/sample_melspect.png">
 </p>
 
-Spectrograms are visual representations of a spectrum of frequencies from a signal as it varies over time.<sup>[**3**](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)</sup> Put simply, a spectrogram is a picture depicting audio visually. The raw audio is converted into a spectrogram using a mathematical technique called the Fourier Transform. The Fourier transform takes an audio snippet and breaks the sound down into constituent sine and cosine waves of corresponding amplitude. Doing so will convert our audio into the "spectrum of frequencies" mentioned above. The package we're using applies a Fast Fourier Tranform (FFT) algorithm multiple times across our passed-in audio to generate the spectrogram. This process can be seen in the image<sup>[**4**](https://www.mathworks.com/help/dsp/ref/dsp.stft.html)</sup>  below.
+Spectrograms are visual representations of a spectrum of frequencies from a signal as it varies over time.<sup>[**3**](https://en.wikipedia.org/wiki/Spectrogram#:~:text=A%20spectrogram%20is%20a%20visual,they%20may%20be%20called%20waterfalls.)</sup> Put simply, a spectrogram is a picture depicting audio visually. The raw audio is converted into a spectrogram using a mathematical technique called the Fourier Transform. The Fourier transform takes a small window of the audio and breaks its down into constituent sine and cosine waves of corresponding amplitude. Doing this will convert our audio into the "spectrum of frequencies" mentioned above. The package we're using applies a Fast Fourier Tranform (FFT) algorithm multiple times across our passed-in audio to generate the spectrogram. This process can be seen in the image<sup>[**4**](https://www.mathworks.com/help/dsp/ref/dsp.stft.html)</sup>  below.
 
 <p align="center">
 <img src="imgs/fft_visualization.png" width="450">
 </p>
 
-The "mel" component of the mel spectrogram refers to the mel scale. The mel scale is a method of scaling pitches to make equal distances in pitch sound equally distant to listeners. This is necessary because human hearing is innately better at hearing differences in low frequencies than differences in high frequencies. The formula<sup>[**5**](https://en.wikipedia.org/wiki/Mel_scale)</sup> to convert frequencies into mels is:
+The "mel" component of the mel spectrogram refers to the mel scale. The mel scale is a method of scaling pitches to make equal distances in pitch sound equally distant to listeners. This is necessary because humans are innately better at hearing differences in low frequencies than differences in high frequencies. The formula<sup>[**5**](https://en.wikipedia.org/wiki/Mel_scale)</sup> to convert frequencies into mels is:
 
 $$m=2595\log _{10}\left(1+{\frac {f}{700}}\right)$$
 
@@ -62,7 +62,7 @@ Coming back to the big picture, the main idea behind using mel spectrograms for 
 ## <a name="data-prep">Data Preparation</a>
 Because we are dealing with audio files, the data could not simply be loaded into a dataframe and manipulated. Instead, I began by first writing scripts to properly access audio files from their nested directories. Thankfully, the creator of this dataset was very deliberate with their file structure and naming conventions, which made accessing the correct tracks easier with the os<sup>[**6**](https://docs.python.org/3/library/os.html)</sup> python package. Accessing specific files was important to be able to link songs with their associated metadata (i.e. genre) located on a separate .csv file. Once these scripts were functional, I was able to start accessing directories of audio to convert songs into mel spectrograms.
 
-The data was pre-trimmed into 30 second samples so I was able to convert the data directly into mel spectrograms using the Librosa<sup>[**7**](https://librosa.org/doc/latest/index.html)</sup> python package. I then took the matrices representing the spectrograms and stored them in an array with their corresponding genre. This array format was the final form of the data that was exported and used to store the input and target variables that were used to train and test deep learning models.
+The data was pre-trimmed into 30 second samples so I was able to convert the data directly into mel spectrograms using the Librosa<sup>[**7**](https://librosa.org/doc/latest/index.html)</sup> python package. I then took the matrices representing the spectrograms and stored them in an array with their corresponding genre. This was the final format that was used to store the feature and target data for modeling.
 
 Later on in the project, I decided to experiment with 1D convolutional neural networks in order to better analyze long-term temporal elements of songs. To do this, I took the mel spectrogram matrices and broke them into sections based on their frequency ranges. My thought process was that I could isolate different frequency ranges in the spectrogram that correspond to different instruments used in a song and convert them to time-based 1-dimensional input channels. The table<sup>[**8**](https://www.cuidevices.com/blog/understanding-audio-frequency-range-in-audio-design)</sup> below shows the frequency band thresholds that I used when creating my input channels.
 
@@ -82,7 +82,7 @@ Once the spectrograms were split into frequency range channels, I "flattened" ea
 ## <a name="EDA">EDA</a>
 After preparing the data for modeling, I took some time to explore the metadata associated with the 8,000 songs from the dataset. The metadata consists of 51 features corresponding to anything from the engineer(s) who worked on the song to the song's wikipedia page (if any) to the song's licensing. It is quite sparse with just under a third of the features having information for less than 3,000 songs.
 
-I was interested in seeing how the songs were distributed based on when they were made. Using the "date_created" feature, I found that the earliest song in the dataset was made on 11/25/2008 while the last song was made on 3/24/2017. I then graphed the number of songs that came from each year per genre. 2017 was omitted from the visualization since it contained so few tracks.
+I was interested in seeing how the songs were distributed based on when they were made. Using the "date_created" feature, I found that the earliest song in the dataset was made on 11/25/2008 while the last song was made on 3/24/2017. I then graphed the number of songs that came from each year per genre. 2017 was omitted from the visualization since it contained very few tracks.
 
 <p align="center">
 <img src="imgs/tracks_per_genre_per_year.png">
@@ -97,9 +97,9 @@ We can see that the 1000 songs per genre are fairly evenly distributed over the 
 I also plotted the average song length per genre. There was a surprising amount of variation with the longest genre, International, being over 50 seconds longer than the shortest genre, Hip-Hop. For our purposes, this should not have any effect on our modeling since we're using 30 second samples for each song.
 
 ## <a name="modeling">Modeling</a>
-I began modeling by establishing a baseline using a dummy classifier which made predictions at random. I elected to use accuracy as my main metric for gauging performance since we want the models to predict all genres equally well and there are no differing rewards/penalties associated with any one genre. Given that we have 8 genres, it makes sense that the dummy classifier had an accuracy of 13% (roughly one in eight).
+I began modeling by establishing a baseline using a dummy classifier which made predictions at random. I elected to use accuracy as my main metric for gauging performance since we want the models to predict all genres equally well and there are no differing rewards/penalties associated with the accuracy for predicting any one genre. Given that we have 8 genres, it makes sense that the dummy classifier had an accuracy of 13% (roughly one in eight).
 
-I made my first model starting with a traditional 2D convolutional neural network (CNN) to process the mel spectrogram images. With this, I was able to achieve a max accuracy of 40% on the test set.
+I made my first model starting with a  2D convolutional neural network (CNN) to process the mel spectrogram images. With this, I was able to achieve a max accuracy of 40% on the validation set.
 
 After hitting a wall, I pivoted to the 1D convolutional neural network approach mentioned above in the data preparation section. This new configuration was able to push the needle forward to an accuracy of 43% on the test set. Another added benefit of this configuration was that training time on the neural network was cut down by 75% since it was processing much less data (1D vs 2D).
 
@@ -109,7 +109,7 @@ The final model configuration utilized the same 1D convolutional neural network 
 <img src="imgs/CNN_LSTM_modelsummary.png">
 </p>
 
-After testing various neural network architectures and performing hyper-parameter tuning, the final model yielded a maximum accuracy of 49% on the test set at 40 epochs.
+After testing various neural network architectures and performing hyper-parameter tuning, the final model yielded a maximum accuracy of 49% on the validation set at 40 epochs.
 
 <p align="center">
 <img src="imgs/model_loss.png">
@@ -121,9 +121,9 @@ After testing various neural network architectures and performing hyper-paramete
 
 ## <a name="summary">Summary</a>
 
-Overall, this project was a great success. We took 30 second clips of 8,000 songs spread evenly across 8 genres and used them to train deep learning models. Starting from a baseline of 12.5% accuracy, the trained CNN-LSTM model was able to improve performance by 36% with a maximum validation accuracy of 49%. During this process, I also learned a lot about (audio) signal processing, which is easily its own field of study altogether.
+Overall, this project was a great success. We took 30 second clips of 8,000 songs spread evenly across 8 genres and used them to train deep learning models. Starting from a baseline of 12.5% accuracy, the trained CNN-LSTM model was able to improve performance by 36% with a maximum validation accuracy of 49%. During this process, I also learned a lot about (audio) signal processing, which is its own field of study altogether.
 
-I firmly believe that this model, in its current architecture, can perform much better given more training data. Especially for neural networks, 8,000 data points is not much to work with. Some next steps for this project would be using the larger, imbalanced datasets from FMA<sup>[**1**](https://github.com/mdeff/fma)</sup> and seeing how the model performs. I'd also like to toy around with partitioning the audio samples into smaller snippets to increase sample size, although that  may affect the model's ability to study long-term temporal effects in the audio.
+I firmly believe that this model, in its current architecture, can perform much better if it is given a larger dataset to train with. 8,000 data points is not much to work with, especially for training neural networks. Some next steps for this project would be using the larger, imbalanced datasets from FMA<sup>[**1**](https://github.com/mdeff/fma)</sup> to see how the model performs. I'd also like to toy around with partitioning the audio samples into smaller snippets to increase sample size, although that  may affect the model's ability to study long-term temporal effects in the audio.
 
 ## <a name="references">References</a>
 
