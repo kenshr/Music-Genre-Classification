@@ -51,7 +51,7 @@ class AudioManagement:
     if len(tracks[(tracks[('set','subset')] == 'small') & (tracks[('set','split')] == split)]) not in [800, 6400]:
       return 'Please provide a valid split: training, validation, or test'
     # Sort for small dataset and split specified in argument
-    df = tracks[(tracks[('set', 'subset')]=='small') & (tracks[('set', 'split') == split])]
+    df = tracks[(tracks[('set', 'subset')] == 'small') & (tracks[('set', 'split')] == split)]
 
     genre_encoding = {'Electronic':0, 'Experimental':1, 'Folk':2, 'Hip-Hop':3,
                       'Instrumental':4, 'International':5, 'Pop':6, 'Rock':7}
