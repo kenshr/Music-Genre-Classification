@@ -43,7 +43,7 @@ class AudioManagement:
   def create_feature_label_data(self, split, destination='../data/'):
     genres = []
     X = np.empty((0, 640, 128))
-    count = 0
+    ct = 0
 
     # Read in metadata
     tracks = pd.read_csv(self.metadata_path, index_col=0, header=[0,1])
@@ -61,7 +61,7 @@ class AudioManagement:
         ct += 1
         track_id = int(row['track_id'])
         genre = str(row[('track', 'genre_top')])
-        spect = make_spectogram(track_id)
+        spect = self.make_spectrogram(track_id)
         # Normalize for small shape differences from time discrepancies
         spect = spect[:640, :]
         X = np.append(X, [spect], axis=0)
