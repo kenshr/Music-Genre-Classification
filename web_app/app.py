@@ -5,11 +5,11 @@ import numpy as np
 
 app = Flask(__name__)
 
-model = pickle.load( open( "../deploy/nmf_model.pkl", "rb" ) )
+# model = pickle.load(open( "../model/", "rb" ) )
 
 @app.route('/', methods=['GET'])
-def home():
-  return render_template('index.html', current_page='HOME')
+def index():
+  return render_template('index.html', current_page='INDEX')
 
 @app.route('/about', methods=['GET'])
 def about():
