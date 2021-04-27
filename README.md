@@ -20,7 +20,7 @@ In a [previous project](https://github.com/kenshr/Music-Genre-Classification-wit
 My workflow is outlined below:
 
 <p align="center">
-<img src='imgs/workflow.png'>
+<img src='imgs/Workflow.png'>
 </p>
 
 The dataset<sup>[**1**](https://github.com/mdeff/fma)</sup> used for this project has 30 second clips of 8000 songs, equally balanced across 8 genres:
