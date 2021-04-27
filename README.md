@@ -17,6 +17,12 @@ In this ever-expanding space, it's important to be able to classify songs to be 
 
 In a [previous project](https://github.com/kenshr/Music-Genre-Classification-with-Audio-Features) I addressed the same issue using audio features of songs, which were gathered from Spotify's web API, in order to determine their genres. While this project proved to be largely successful, I wanted to build on the same idea and make my models more adaptable. Rather than using audio features that need to be generated via a third party, this project will use deep learning models to perform genre classification on songs using raw audio.
 
+My workflow is outlined below:
+
+<p align="center">
+<img src='imgs/workflow.png'>
+</p>
+
 The dataset<sup>[**1**](https://github.com/mdeff/fma)</sup> used for this project has 30 second clips of 8000 songs, equally balanced across 8 genres:
 - Electronic
 - Experimental
