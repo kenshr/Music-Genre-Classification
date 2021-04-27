@@ -48,8 +48,8 @@ class AudioManagement:
     # Read in metadata
     tracks = pd.read_csv(self.metadata_path, index_col=0, header=[0,1])
     # Check for incorrect splits
-    if len(tracks[tracks[('set', 'split')] == split]) not in [800, 6400]:
-      return 'Please provide a valid split: train, validation, or test'
+    if len(tracks[(tracks[('set','subset')] == 'small') & (tracks[('set','split')] == split)]) not in [800, 6400]:
+      return 'Please provide a valid split: training, validation, or test'
     # Sort for small dataset and split specified in argument
     df = tracks[(tracks[('set', 'subset')]=='small') & (tracks[('set', 'split') == split])]
 
