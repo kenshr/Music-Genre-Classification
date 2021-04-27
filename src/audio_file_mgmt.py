@@ -57,9 +57,9 @@ class AudioManagement:
                       'Instrumental':4, 'International':5, 'Pop':6, 'Rock':7}
 
     for index, row in tqdm(df.iterrows()):
+      ct += 1
       try:
-        ct += 1
-        track_id = int(row['track_id'])
+        track_id = int(df.index[index])
         genre = str(row[('track', 'genre_top')])
         spect = self.make_spectrogram(track_id)
         # Normalize for small shape differences from time discrepancies
