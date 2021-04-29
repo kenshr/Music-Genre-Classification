@@ -116,7 +116,7 @@ After hitting a wall, I pivoted to the 1D convolutional neural network approach 
 The final model configuration utilized the same 1D convolutional neural network and added an LSTM layer to the architecture to better capture long-term temporal trends in the audio. This way, the initial CNN layers could capture different feature elements of the song which would then be fed into the LSTM to discern longer patterns such as rhythm and cadence.
 
 <p align="center">
-<img src="imgs/CNN_LSTM_modelsummary.png">
+<img src="imgs/CNN_LSTM_model.jpg">
 </p>
 
 After testing various neural network architectures and performing hyper-parameter tuning, the final model yielded a maximum accuracy of 49% on the validation set at 40 epochs.
