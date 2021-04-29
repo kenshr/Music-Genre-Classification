@@ -83,7 +83,11 @@ Later on in the project, I decided to experiment with 1D convolutional neural ne
 |    Brilliance    |      6000-20000      | high-pitched sounds like whistles, cymbals, and high harmonics         |
 
 <br/>
-Once the spectrograms were split into frequency range channels, I "flattened" each of the channels by averaging their frequencies for small incremental time splits to thus yield 7 channels of 1-dimensional frequency input that represent the song.
+Once the spectrograms were split into frequency range channels, I "flattened" each of the channels by averaging their frequencies for small incremental time splits to thus yield 7 channels of 1-dimensional frequency input that represent the song. This process can be seen in the visualization below.
+
+<p align="center">
+<img src="imgs/1D_conversion_visualization.png" width="450">
+</p>
 
 ## <a name="EDA">EDA</a>
 After preparing the data for modeling, I took some time to explore the metadata associated with the 8,000 songs from the dataset. The metadata consists of 51 features corresponding to anything from the engineer(s) who worked on the song to the song's wikipedia page (if any) to the song's licensing. It is quite sparse with just under a third of the features having information for less than 3,000 songs.
