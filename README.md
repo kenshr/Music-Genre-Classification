@@ -86,7 +86,7 @@ Later on in the project, I decided to experiment with 1D convolutional neural ne
 Once the spectrograms were split into frequency range channels, I "flattened" each of the channels by averaging their frequencies for small incremental time splits to thus yield 7 channels of 1-dimensional frequency input that represent the song. This process can be seen in the visualization below.
 
 <p align="center">
-<img src="imgs/1D_conversion_visualization.png" width="450">
+<img src="imgs/1D_conversion_visualization.png">
 </p>
 
 ## <a name="EDA">EDA</a>
