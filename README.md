@@ -113,7 +113,7 @@ I made my first model starting with a  2D convolutional neural network (CNN) to 
 
 After hitting a wall, I pivoted to the 1D convolutional neural network approach mentioned above in the data preparation section. This new configuration was able to push the needle forward to an accuracy of 43% on the test set. Another added benefit of this configuration was that training time on the neural network was cut down by 75% since it was processing much less data (1D vs 2D).
 
-The final model configuration utilized the same 1D convolutional neural network and added an LSTM layer to the architecture to better capture long-term temporal trends in the audio. This way, the initial CNN layers could capture different feature elements of the song which would then be fed into the LSTM to discern longer patterns such as rhythm and cadence.
+The final model configuration utilized the same 1D convolutional neural network and added an LSTM layer to the architecture to better capture long-term temporal trends in the audio. This way, the initial CNN layers could capture different feature elements of the song which would then be fed into the LSTM to discern longer patterns such as rhythm and cadence. Additionally, batch normalization was applied at every step to accelerate training along with L2 regularization and dropout to mitigate overfitting.
 
 <p align="center">
 <img src="imgs/CNN_LSTM_model.jpg">
